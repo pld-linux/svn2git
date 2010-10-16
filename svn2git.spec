@@ -1,7 +1,7 @@
 Summary:	Tool for importing existing svn projects into git
 Name:		svn2git
 Version:	2.0.0
-Release:	0.1
+Release:	1
 License:	MIT
 Source0:	http://github.com/nirvdrum/svn2git/tarball/v%{version}#/%{name}-%{version}.tgz
 # Source0-md5:	64f428daca195a9b04e9e4ff39566cc6
@@ -12,6 +12,7 @@ BuildRequires:	ruby >= 1:1.8.6
 BuildRequires:	ruby-modules
 BuildRequires:	setup.rb
 %{?ruby_mod_ver_requires_eq}
+Requires:	git-core-svn
 #BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
