@@ -1,23 +1,19 @@
 Summary:	Tool for importing existing svn projects into git
 Name:		svn2git
 Version:	2.0.0
-Release:	1
+Release:	2
 License:	MIT
-Source0:	http://github.com/nirvdrum/svn2git/tarball/v%{version}#/%{name}-%{version}.tgz
-# Source0-md5:	64f428daca195a9b04e9e4ff39566cc6
 Group:		Development/Languages
-URL:		https://www.negativetwenty.net/redmine/projects/show/svn2git
+Source0:	http://github.com/nirvdrum/svn2git/tarball/v%{version}?/%{name}-%{version}.tgz
+# Source0-md5:	64f428daca195a9b04e9e4ff39566cc6
+URL:		https://github.com/nirvdrum/svn2git
 BuildRequires:	rpmbuild(macros) >= 1.484
 BuildRequires:	ruby >= 1:1.8.6
 BuildRequires:	ruby-modules
 BuildRequires:	setup.rb
-%{?ruby_mod_ver_requires_eq}
 Requires:	git-core-svn
-#BuildArch:	noarch
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# nothing to be placed there. we're not noarch only because of ruby packaging
-%define		_enable_debug_packages	0
 
 %description
 svn2git is a tiny utility for migrating projects from Subversion to
@@ -37,14 +33,13 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %build
 cp %{_datadir}/setup.rb .
 %{__ruby} setup.rb config \
-	--rbdir=%{ruby_rubylibdir} \
-	--sodir=%{ruby_archdir}
+	--rbdir=%{ruby_vendorlibdir}
 
 %{__ruby} setup.rb setup
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
 %{__ruby} setup.rb install \
 	--prefix=$RPM_BUILD_ROOT
 
@@ -55,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog.markdown README.markdown MIT-LICENSE
 %attr(755,root,root) %{_bindir}/svn2git
-%{ruby_rubylibdir}/svn2git.rb
-%dir %{ruby_rubylibdir}/svn2git
-%{ruby_rubylibdir}/svn2git/blah.rb
-%{ruby_rubylibdir}/svn2git/migration.rb
+%{ruby_vendorlibdir}/svn2git.rb
+%dir %{ruby_vendorlibdir}/svn2git
+%{ruby_vendorlibdir}/svn2git/blah.rb
+%{ruby_vendorlibdir}/svn2git/migration.rb
